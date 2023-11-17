@@ -1,4 +1,4 @@
-import MenuController from "./controller/MenuContoller.js";
+import MenuController from "./controller/MenuController.js";
 
 class App {
   async play() {

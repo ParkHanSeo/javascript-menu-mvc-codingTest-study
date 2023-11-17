@@ -1,23 +1,45 @@
-import { Random } from "@woowacourse/mission-utils";
-import { MENU } from '../contants/Contants.js'
+import { Console, Random } from "@woowacourse/mission-utils";
+import { RANDOM_NUM, FOOD_MENU } from '../contants/Contants.js'
 
 class Recommend {
 
-    getRecommendMenu(coachName, menu) {
-        const RECOMMEND_MENU = [];
-        coachName.forEach((name, idx) => {
-            const menu = [];
-            for(let i = 0; i < 5; i++){
-                const shuffleNum = Random.shuffle([1,2,3,4,5,6,7,8,9]);
-                MENU[menu]
-            }
+    recommendProcess(menu) {
+        const test = []
+        for(let i = 1; i <= 5; i++){
+            const weekDayMenu = this.#getWeekDayMenuResult(menu);
+            test.push(weekDayMenu);
+        }
+        const testData = [];
+        Object.keys(menu).forEach((data, idx) => {
+            testData.push(test.map(item => item[idx]).join(' | '))
         });
-    }
-    // Random.shuffle(array)
-    #menuShuffle(menu) {
-        // const FOOD = ;
+        console.log(testData);
     }
 
+    #getWeekDayMenuResult(menu) {
+        const coachListMenu = [];
+        const categoryNum = this.#getRandomCategory();
+        Object.values(menu).forEach((data) => {
+            const foodMenu = this.#getRandomFoodMenu(data, categoryNum); 
+            coachListMenu.push(foodMenu);
+        });
+        return coachListMenu;
+    }
+
+    #getRandomCategory() {
+        return Random.pickNumberInRange(RANDOM_NUM.START_NUM, RANDOM_NUM.END_NUM);
+    }
+
+    #getRandomFoodMenu(passMenu, categoryNum) {
+        const menu = FOOD_MENU[categoryNum];
+        const menuRamdomNum = Random.shuffle(Array.from({ length: 9 }, (_, index) => index + 1));
+        const checkMenu = menu.split(', ')[Number(menuRamdomNum[0])-1]
+        if(passMenu.filter((data) => data === checkMenu).length == 1){
+            return this.#getRandomFoodMenu(passMenu, categoryNum);
+        }
+        return checkMenu;
+    }
+    
 }
 
 export default Recommend

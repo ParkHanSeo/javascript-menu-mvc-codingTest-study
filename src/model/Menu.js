@@ -1,32 +1,26 @@
-import { Random } from "@woowacourse/mission-utils";
-import { WEEKDAY, CATEGORY_RANDOM_NUM } from '../contants/Contants.js'
+import Validation from '../util/Validation.js'
 
 class Menu {
 
-    #passMenu
+    #coachName
+    #cannotMenu;
 
-    constructor(passMenu) {
-        this.#passMenu = passMenu;
+    constructor(coachName, cannotMenu) {
+        this.#coachName = coachName;
+        this.#cannotMenu = cannotMenu;
         this.#validation();
-    }  
+    }
 
     #validation() {
-        
+        Validation.inputCannotMenuValidate(this.#cannotMenu);
     }
 
     getMenu() {
-        const MENU_CATEGORY = this.#getRandomCategory();
-        const PASS_MENU = this.#passMenu;
-        return { MENU_CATEGORY, PASS_MENU }
-    }
-
-    #getRandomCategory(){
-        const CATEGORY = {};
-        for(let i = 0; i < CATEGORY_RANDOM_NUM.FINISH_NUM; i++){
-            const CATEGORY_NUM = Random.pickNumberInRange(CATEGORY_RANDOM_NUM.START_NUM, CATEGORY_RANDOM_NUM.FINISH_NUM);
-            CATEGORY[Object.keys(WEEKDAY)[i]] = CATEGORY_NUM;
-        }
-        return CATEGORY;
+        const CANNOT_MENU = {};
+        this.#coachName.forEach((name, idx) => {
+            CANNOT_MENU[name] = this.#cannotMenu[idx].split(',');
+        })
+        return CANNOT_MENU;
     }
 
 }

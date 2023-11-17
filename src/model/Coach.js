@@ -1,18 +1,20 @@
+import Validation from '../util/Validation.js'
+
 class Coach {
 
-    #name;
+    #coachName;
 
     constructor(coachName) {
-        this.#name = coachName;
+        this.#coachName = coachName;
         this.#validation();
     }
 
     #validation() {
-        
+        Validation.inputCoachNameValidate(this.#coachName);
     }
 
     getCoachName() {
-        return this.#name;
+        return this.#coachName.split(',');
     }
 
 }
