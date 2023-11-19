@@ -4,7 +4,8 @@ import Menu from '../model/Menu.js'
 import Category from '../model/Category.js'
 import Recommend from '../model/Recommend.js'
 import InputView from '../view/InputView.js'
-// import OutputView from '../view/OutputView.js'
+import OutputView from '../view/OutputView.js'
+import OuputView from "../view/OutputView.js";
 
 
 class MenuController {
@@ -18,9 +19,11 @@ class MenuController {
     }
 
     async menuProcess() {
+        OuputView.outputLunchRecommendStart();
         await this.#inputCoachName();
         await this.#inputCannotEatMenu();
-        this.#recommendMenu();
+        const recommendMenu = this.#recommendMenu();
+        this.#outputLunchRecommendResult(recommendMenu);
     }
 
     async #inputCoachName() {
@@ -45,6 +48,15 @@ class MenuController {
 
     #recommendMenu() {
         const data = this.#recommend.recommendProcess(this.#menu);
+        return data;
+    }
+
+    #outputLunchRecommendResult(recommend) {
+        OutputView.outputLunchRecommendResult(recommend);
+        OutputView.outputMenuWeekDay();
+        OutputView.outputCategory(recommend);
+        OutputView.outputMenu(recommend);
+        OutputView.outputRecommendFinish();
     }
     
 }

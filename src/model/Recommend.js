@@ -4,6 +4,13 @@ import { RANDOM_NUM, FOOD_MENU, FOOD_CATEGORY } from '../contants/Contants.js'
 class Recommend {
 
     recommendProcess(menu) {
+        const coachMenu = this.#getCoachMenu(menu);
+        const outputCategory = this.#getOutputCategory(coachMenu.category);
+        const outputMenu = this.#getOutputMenu(menu, coachMenu.coachMenu);
+        return { outputCategory, outputMenu }
+    }
+
+    #getCoachMenu(menu) {
         const coachMenu = [];
         const category = [];
         for(let i = 1; i <= 5; i++){
@@ -11,13 +18,23 @@ class Recommend {
             coachMenu.push(weekDayMenu.coachListMenu);
             category.push(FOOD_CATEGORY[weekDayMenu.categoryNum]);
         }
+        return { coachMenu, category }
+    }
 
+    #getOutputMenu(menu, coachMenu) {
         const outputMenu = [];
         Object.keys(menu).forEach((data, idx) => {
             outputMenu.push(coachMenu.map(item => item[idx]).join(' | '));
             outputMenu[idx] = `[ ${data} | ${outputMenu[idx]} ]`
         });
+        return outputMenu;
+    }
 
+    #getOutputCategory(category) {
+        let outputCategory = [];
+        outputCategory.push(category.map(item => item).join(' | '));
+        outputCategory = `[ 카테고리 | ${outputCategory} ]`;
+        return outputCategory;
     }
 
     #getWeekDayMenuResult(menu) {

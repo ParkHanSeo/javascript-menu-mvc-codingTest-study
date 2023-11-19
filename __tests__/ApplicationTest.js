@@ -1,5 +1,7 @@
-const MissionUtils = require('@woowacourse/mission-utils');
-const App = require('../src/App');
+import { MissionUtils } from "@woowacourse/mission-utils";
+import App from "../src/App.js";
+// const MissionUtils = require('@woowacourse/mission-utils');
+// const App = require('../src/App');
 
 const mockQuestions = (answers) => {
 	MissionUtils.Console.readLine = jest.fn();
@@ -75,7 +77,6 @@ describe('점심 메뉴 테스트', () => {
 			const app = new App();
 			app.play();
 			const log = getOutput(logSpy);
-
 			expect(log.replace(/\n/g, '')).toEqual(
 				expect.stringContaining(
 					[
