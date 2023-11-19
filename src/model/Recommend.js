@@ -1,19 +1,23 @@
 import { Console, Random } from "@woowacourse/mission-utils";
-import { RANDOM_NUM, FOOD_MENU } from '../contants/Contants.js'
+import { RANDOM_NUM, FOOD_MENU, FOOD_CATEGORY } from '../contants/Contants.js'
 
 class Recommend {
 
     recommendProcess(menu) {
-        const test = []
+        const coachMenu = [];
+        const category = [];
         for(let i = 1; i <= 5; i++){
             const weekDayMenu = this.#getWeekDayMenuResult(menu);
-            test.push(weekDayMenu);
+            coachMenu.push(weekDayMenu.coachListMenu);
+            category.push(FOOD_CATEGORY[weekDayMenu.categoryNum]);
         }
-        const testData = [];
+
+        const outputMenu = [];
         Object.keys(menu).forEach((data, idx) => {
-            testData.push(test.map(item => item[idx]).join(' | '))
+            outputMenu.push(coachMenu.map(item => item[idx]).join(' | '));
+            outputMenu[idx] = `[ ${data} | ${outputMenu[idx]} ]`
         });
-        console.log(testData);
+
     }
 
     #getWeekDayMenuResult(menu) {
@@ -23,7 +27,7 @@ class Recommend {
             const foodMenu = this.#getRandomFoodMenu(data, categoryNum); 
             coachListMenu.push(foodMenu);
         });
-        return coachListMenu;
+        return { coachListMenu, categoryNum };
     }
 
     #getRandomCategory() {
