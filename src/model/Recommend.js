@@ -1,5 +1,5 @@
 import { Console, Random } from "@woowacourse/mission-utils";
-import { RANDOM_NUM, FOOD_MENU, FOOD_CATEGORY } from '../contants/Contants.js'
+import { RANDOM_NUM, FOOD_MENU, FOOD_CATEGORY, WEEK_DAY } from '../contants/Contants.js'
 
 class Recommend {
 
@@ -13,10 +13,16 @@ class Recommend {
     #getCoachMenu(menu) {
         const coachMenu = [];
         const category = [];
-        for(let i = 1; i <= 5; i++){
+        for(let i = 0; i < WEEK_DAY.length; i++){
             const weekDayMenu = this.#getWeekDayMenuResult(menu);
             coachMenu.push(weekDayMenu.coachListMenu);
             category.push(FOOD_CATEGORY[weekDayMenu.categoryNum]);
+            if(category.filter((data) => data === FOOD_CATEGORY[weekDayMenu.categoryNum]).length == 3 ||
+               coachMenu.filter((data) => data === weekDayMenu.coachListMenu).length == 2){
+                category.pop();
+                coachMenu.pop();
+                i = i-1;
+            }
         }
         return { coachMenu, category }
     }

@@ -1,7 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 import Coach from '../model/Coach.js'
 import Menu from '../model/Menu.js'
-import Category from '../model/Category.js'
 import Recommend from '../model/Recommend.js'
 import InputView from '../view/InputView.js'
 import OutputView from '../view/OutputView.js'
